@@ -1,7 +1,10 @@
-<p-dialog header="Title" [(visible)]="display">
-  <app-employee-form [id]="empId" (newItemEvent)="closed()"></app-employee-form>
+<p-dialog header="Title" [(visible)]="display" [closable]="false">
+  <app-employee-form
+    [id]="empId ? empId : ''"
+    (newItemEvent)="closed()"
+  ></app-employee-form>
 </p-dialog>
-<div class="Employee-container">
+<div class="Employee-container" *ngIf="!(loading$ | async)">
   <p-card>
     <div class="grid">
       <div class="col-12">
@@ -28,30 +31,31 @@
         <p-table
           responsiveLayout="scroll"
           styleClass="p-datatable-gridlines"
-          [value]="(emplyees | async)!"
+          [value]="emplyees"
           [paginator]="true"
           [rows]="10"
           [showCurrentPageReport]="true"
           [rowsPerPageOptions]="[10, 25, 50]"
+          sortMode="single"
         >
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 3rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
               </th>
-              <th pSortableColumn="name">
-                Name<p-sortIcon field="name"></p-sortIcon>
+              <th [pSortableColumn]="'empName'">
+                Name <p-sortIcon [field]="'empName'"></p-sortIcon>
               </th>
-              <th>Email</th>
-              <th pSortableColumn="price">
-                Adress<p-sortIcon field="price"></p-sortIcon>
+              <th pSortableColumn="empEmail">
+                Email<p-sortIcon field="empEmail"></p-sortIcon>
               </th>
-              <th pSortableColumn="stock">
-                Phone<p-sortIcon field="stock"></p-sortIcon>
+              <th pSortableColumn="empAddress">
+                Adress<p-sortIcon field="empAddress"></p-sortIcon>
               </th>
-              <th pSortableColumn="category">
-                Actions<p-sortIcon field="category"></p-sortIcon>
+              <th pSortableColumn="empPhone">
+                Phone<p-sortIcon field="empPhone"></p-sortIcon>
               </th>
+              <th pSortableColumn="category">Actions</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-employee>
@@ -79,7 +83,7 @@
           </ng-template>
           <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="8">No Employees found.</td>
+              <td colspan="8">No Employees found.</td>
             </tr>
           </ng-template>
         </p-table>
@@ -87,4 +91,3 @@
     </div>
   </p-card>
 </div>
-

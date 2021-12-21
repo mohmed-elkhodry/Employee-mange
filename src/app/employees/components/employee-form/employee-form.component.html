@@ -9,11 +9,11 @@
               styleClass="p-button-primary mr-2"
               label="{{ editMode ? 'Save' : 'Add' }}"
               icon="pi pi-plus"
-              [disabled]="form.invalid"
+              [disabled]="form.invalid || loading"
               (click)="submit()"
             ></p-button>
             <p-button
-              styleClass="p-button-secondary"
+              styleClass="p-button-danger"
               label="Cancel"
               icon="pi pi-times"
               (onClick)="close()"
@@ -48,16 +48,16 @@
             class="w-full"
             formControlName="email"
           />
-          <!-- <small
+          <small
             class="p-error"
             *ngIf="form.controls['email'].invalid && isSubmitted"
-            ><span *ngIf="form.controls['email'].errors?.required && isSubmitted"
+            ><span *ngIf="$any(form.controls['email']).errors['required'] && isSubmitted"
               >Email is Required</span
             >
-            <span *ngIf="form.controls['email'].errors?.email && isSubmitted"
+            <span *ngIf="$any(form.controls['email']).errors['email'] && isSubmitted"
               >Enter A valid Email</span
             ></small
-          > -->
+          >
         </div>
       </div>
       <div class="formgrid grid">
@@ -65,15 +65,15 @@
           <label for="phone" class="block">Phone</label>
           <p-inputMask
             id="phone"
-            mask="(999) 999-9999"
+            mask="01999999999"
             formControlNamephone
-            placeholder="(999) 999-9999"
+            placeholder="01xxxxxxxxx"
             formControlName="phone"
           ></p-inputMask>
           <small
             class="p-error block"
             *ngIf="form.controls['phone'].invalid && isSubmitted"
-            >Phone is required</small
+            >Enter A valid Phone number</small
           >
         </div>
       </div>

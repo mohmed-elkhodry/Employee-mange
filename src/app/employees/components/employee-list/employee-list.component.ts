@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Component, OnDestroy, OnInit, DoCheck } from '@angular/core';
+import { ConfirmationService, MessageService, SortEvent } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { uiService } from 'src/app/shared/services/ui.service';
 import { Employee } from '../../models/employee.model';
 import { EmpolyeesService } from '../../services/employees.service';
 
@@ -9,19 +10,28 @@ import { EmpolyeesService } from '../../services/employees.service';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent implements OnInit,OnDestroy {
+export class EmployeeListComponent implements OnInit,OnDestroy,DoCheck {
   sub$ = new Subject();
   display : boolean = false;
   empId="";
+  loading$;
 
-  constructor(private empSer:EmpolyeesService,private confirmationService: ConfirmationService,private messageService:MessageService) { }
+  constructor(private empSer:EmpolyeesService,private uiSer:uiService,private confirmationService: ConfirmationService,private messageService:MessageService) {
+    this.loading$ = this.uiSer.loading$;
+   }
+  ngDoCheck(): void {
+    console.log(this.empId)
+  }
 
-  emplyees!:Observable<Employee[]>;
+  emplyees!:Employee[];
   ngOnInit(): void {
     this.getEmplyees();
   }
   getEmplyees() {
-    this.emplyees = this.empSer.getEmployees();
+    this.empSer.getEmployees().pipe(takeUntil(this.sub$)).subscribe((res)=>{
+      this.emplyees = res;
+      this.uiSer.loading$.next(false);
+    });
   }
   DeleteEmp(id:string){
     this.confirmationService.confirm({
@@ -43,7 +53,9 @@ export class EmployeeListComponent implements OnInit,OnDestroy {
   closed(){
     this.display = false;
     this.getEmplyees();
+    this.empId = "";
   }
+
   ngOnDestroy(): void {
     this.sub$.next("");
     this.sub$.complete();
