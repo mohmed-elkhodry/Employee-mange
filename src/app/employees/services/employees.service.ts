@@ -18,6 +18,12 @@ export class EmpolyeesService {
   deleteEmployee(id:string){
     return this.http.get(`${this.Employee_API}/deleteEmpByID/${id}`);
   }
+  addEmployee(emp:Employee){
+    return this.http.post(`${this.Employee_API}/addEmployee`,emp);
+  }
+  editEmployee(emp:Employee){
+    return this.http.post(`${this.Employee_API}/editEmployee`,emp);
+  }
 
 
 

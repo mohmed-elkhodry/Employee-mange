@@ -1,1 +1,99 @@
-<p>employee-form works!</p>
+<div class="user-container">
+  <p-card header="{{ editMode ? 'Edit' : 'Add' }} User">
+    <div class="grid mb-2">
+      <div class="col-12">
+        <p-toolbar>
+          <div class="p-toolbar-group-left"></div>
+          <div class="p-toolbar-group-right">
+            <p-button
+              styleClass="p-button-primary mr-2"
+              label="{{ editMode ? 'Save' : 'Add' }}"
+              icon="pi pi-plus"
+              [disabled]="form.invalid"
+              (click)="submit()"
+            ></p-button>
+            <p-button
+              styleClass="p-button-secondary"
+              label="Cancel"
+              icon="pi pi-times"
+              (onClick)="close()"
+            ></p-button>
+          </div>
+        </p-toolbar>
+      </div>
+    </div>
+    <form [formGroup]="form">
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            class="w-full"
+            formControlName="name"
+          />
+          <small
+            class="p-error"
+            *ngIf="form.controls['name'].invalid && isSubmitted"
+            >Name is required</small
+          >
+        </div>
+        <div class="field col">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="text"
+            pInputText
+            class="w-full"
+            formControlName="email"
+          />
+          <!-- <small
+            class="p-error"
+            *ngIf="form.controls['email'].invalid && isSubmitted"
+            ><span *ngIf="form.controls['email'].errors?.required && isSubmitted"
+              >Email is Required</span
+            >
+            <span *ngIf="form.controls['email'].errors?.email && isSubmitted"
+              >Enter A valid Email</span
+            ></small
+          > -->
+        </div>
+      </div>
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="phone" class="block">Phone</label>
+          <p-inputMask
+            id="phone"
+            mask="(999) 999-9999"
+            formControlNamephone
+            placeholder="(999) 999-9999"
+            formControlName="phone"
+          ></p-inputMask>
+          <small
+            class="p-error block"
+            *ngIf="form.controls['phone'].invalid && isSubmitted"
+            >Phone is required</small
+          >
+        </div>
+      </div>
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="Adress">Adress</label>
+          <input
+            id="Adress"
+            type="text"
+            pInputText
+            class="w-full"
+            formControlName="Adress"
+          />
+          <small
+            class="p-error block"
+            *ngIf="form.controls['Adress'].invalid && isSubmitted"
+            >Adress is required</small
+          >
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

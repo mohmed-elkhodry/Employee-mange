@@ -5,6 +5,7 @@ import { EmployeesRoutingModule } from './employees-routing.module';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { primeNgCompnents } from '../app.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { primeNgCompnents } from '../app.module';
   ],
   imports: [
     CommonModule,
-    EmployeesRoutingModule,primeNgCompnents
+    EmployeesRoutingModule,primeNgCompnents,FormsModule,ReactiveFormsModule
   ]
 })
 export class EmployeesModule { }

@@ -11,6 +11,8 @@ import { EmpolyeesService } from '../../services/employees.service';
 })
 export class EmployeeListComponent implements OnInit,OnDestroy {
   sub$ = new Subject();
+  display : boolean = false;
+  empId="";
 
   constructor(private empSer:EmpolyeesService,private confirmationService: ConfirmationService,private messageService:MessageService) { }
 
@@ -33,6 +35,14 @@ export class EmployeeListComponent implements OnInit,OnDestroy {
         )
       }
     });
+  }
+  openEdit(id:string){
+    this.display = true;
+    this.empId = id;
+  }
+  closed(){
+    this.display = false;
+    this.getEmplyees();
   }
   ngOnDestroy(): void {
     this.sub$.next("");

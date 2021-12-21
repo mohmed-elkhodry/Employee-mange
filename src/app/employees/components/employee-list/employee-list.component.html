@@ -1,3 +1,6 @@
+<p-dialog header="Title" [(visible)]="display">
+  <app-employee-form [id]="empId" (newItemEvent)="closed()"></app-employee-form>
+</p-dialog>
 <div class="Employee-container">
   <p-card>
     <div class="grid">
@@ -16,6 +19,7 @@
               label="Add New Employee"
               icon="pi pi-plus"
               styleClass="p-button-success"
+              (onClick)="display = true"
             ></p-button>
           </div>
         </p-toolbar>
@@ -32,6 +36,9 @@
         >
           <ng-template pTemplate="header">
             <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
               <th pSortableColumn="name">
                 Name<p-sortIcon field="name"></p-sortIcon>
               </th>
@@ -49,6 +56,9 @@
           </ng-template>
           <ng-template pTemplate="body" let-employee>
             <tr>
+              <td>
+                <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+              </td>
               <td>{{ employee.empName }}</td>
               <td>{{ employee.empEmail }}</td>
               <td>{{ employee.empAddress }}</td>
@@ -62,9 +72,14 @@
                 <p-button
                   styleClass="p-button-error"
                   icon="pi pi-pencil"
-                  [routerLink]="['form', employee.id]"
+                  (onClick)="openEdit(employee.empId)"
                 ></p-button>
               </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No Employees found.</td>
             </tr>
           </ng-template>
         </p-table>

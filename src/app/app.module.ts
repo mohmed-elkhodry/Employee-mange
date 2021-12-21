@@ -14,10 +14,15 @@ import {ButtonModule} from 'primeng/button';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
+import {DialogModule} from 'primeng/dialog';
+import {InputMaskModule} from 'primeng/inputmask';
+import {InputTextModule} from 'primeng/inputtext';
 
 
 
-export const primeNgCompnents = [TableModule,CardModule,ToolbarModule,ButtonModule,ConfirmDialogModule,ToastModule];
+
+
+export const primeNgCompnents = [TableModule,CardModule,InputMaskModule,InputTextModule,ToolbarModule,ButtonModule,ConfirmDialogModule,ToastModule,DialogModule];
 
 @NgModule({
   declarations: [
